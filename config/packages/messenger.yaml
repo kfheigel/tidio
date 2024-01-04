@@ -16,14 +16,19 @@ framework:
             command.bus:
                 middleware:
                     - validation
-                    - 'App\Infrastructure\Middleware\FlushMiddleware'
+                    - App\Infrastructure\MessageBus\Middleware\FlushMiddleware
+                    - App\Infrastructure\MessageBus\Middleware\LoggerMiddleware
             event.bus:
                 default_middleware:  
                     enabled: true
                     allow_no_handlers: true
                 middleware:
                     - validation
-                    - 'App\Infrastructure\Middleware\FlushMiddleware'
+                    - App\Infrastructure\MessageBus\Middleware\FlushMiddleware
+                    - App\Infrastructure\MessageBus\Middleware\LoggerMiddleware
+            query.bus:
+                middleware:
+                    - App\Infrastructure\MessageBus\Middleware\LoggerMiddleware
 
         routing:
-            'App\UseCase\CreateClient\CreateClientCommand': async
+            'App\UseCase\CreateEmployee\CreateEmployeeCommand': async

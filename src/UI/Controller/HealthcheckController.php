@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace App\UI\Controller;
 
 use Exception;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Infrastructure\Repository\ClientRepository;
+use App\Infrastructure\Repository\EmployeeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HealthcheckController extends AbstractController
+final class HealthcheckController extends AbstractController
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private ClientRepository $clientRepository
-        )
-    {
+        private readonly EmployeeRepository $employeeRepository
+    ) {
     }
 
     #[Route('/healthcheck', name: 'app_healthcheck')]
@@ -30,8 +27,8 @@ class HealthcheckController extends AbstractController
         ];
 
         try {
-            $this->clientRepository->findAll();
-        } catch (Exception $exception) {
+            $this->employeeRepository->findAll();
+        } catch (Exception) {
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
             $checks['database'] = 'not ok';
         }

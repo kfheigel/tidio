@@ -6,5 +6,4 @@ namespace App\Domain\Messenger;
 
 interface EventListenerInterface
 {
-
 }

@@ -19,3 +19,6 @@ services:
         App\Domain\Messenger\EventListenerInterface:
             tags:
                 - { name: messenger.message_handler, bus: event.bus }
+        App\Domain\Messenger\QueryFinderInterface:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
