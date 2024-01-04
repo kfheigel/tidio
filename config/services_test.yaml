@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    public: true
+
+    App\Domain\Repository\ClientRepositoryInterface:
+      public: true
+      class: 'App\Infrastructure\Repository\ClientRepository'
+      arguments:
+        $registry: '@Doctrine\Persistence\ManagerRegistry'
