@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PayrollController extends AbstractController
 {
-    #[Route('/payroll', name: 'app_payroll')]
+    #[Route('/payroll', name: 'app_payroll', methods: ['GET'])]
     public function showPayroll(QueryBus $queryBus): JsonResponse
     {
 

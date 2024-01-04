@@ -22,3 +22,7 @@ services:
         App\Domain\Messenger\QueryFinderInterface:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
+
+    App\UI\Controller\HealthcheckController:
+        arguments:
+            $rabbitDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
