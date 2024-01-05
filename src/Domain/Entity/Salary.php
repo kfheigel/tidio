@@ -23,18 +23,13 @@ class Salary
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $bonusSalary;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $salaryWithBonus;
-
     public function __construct(
         int $baseSalary,
         ?int $bonusSalary,
-        ?int $salaryWithBonus,
         ?Uuid $id = null
     ) {
         $this->baseSalary = $baseSalary;
         $this->bonusSalary = $bonusSalary;
-        $this->salaryWithBonus = $salaryWithBonus;
         $this->id = $id ?? Uuid::v4();
     }
 
@@ -63,13 +58,8 @@ class Salary
         $this->bonusSalary = $bonusSalary;
     }
 
-    public function getSalaryWithBonus(): ?int
+    public function toArray(): array
     {
-        return $this->salaryWithBonus;
-    }
-
-    public function setSalaryWithBonus(int $salaryWithBonus): void
-    {
-        $this->salaryWithBonus = $salaryWithBonus;
+        return get_object_vars($this);
     }
 }

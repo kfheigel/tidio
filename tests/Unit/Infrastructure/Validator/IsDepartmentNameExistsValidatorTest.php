@@ -34,7 +34,7 @@ final class IsDepartmentNameExistsValidatorTest extends ValidatorTestCase
     public function department_with_name_exists_already_in_database(): void
     {
         // given
-        $givenExistingDepartmentName = "Existing department name";
+        $givenExistingDepartmentName = "Existing department departmentName";
         $this->giveDepartment($givenExistingDepartmentName);
 
         // when
@@ -51,7 +51,7 @@ final class IsDepartmentNameExistsValidatorTest extends ValidatorTestCase
     public function validator_sets_validation_code_given_in_constructor(): void
     {
         // given
-        $givenExistingDepartmentName = 'Existing department name';
+        $givenExistingDepartmentName = 'Existing department departmentName';
         $this->giveDepartment($givenExistingDepartmentName);
         $givenViolationCode = 12345;
 
@@ -70,7 +70,7 @@ final class IsDepartmentNameExistsValidatorTest extends ValidatorTestCase
     public function department_with_name_does_not_exists_in_database(): void
     {
         // given
-        $givenNonExistingDepartmentName = "Brand new department name";
+        $givenNonExistingDepartmentName = "Brand new department departmentName";
 
         // when
         $this->validator->validate($givenNonExistingDepartmentName, $this->givenConstraint);

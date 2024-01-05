@@ -8,4 +8,9 @@ enum BonusTypeEnum: string
 {
     case percentage = 'percentage';
     case fixed = 'fixed';
+
+    public static function getAllValues(): array
+    {
+        return array_values(array_column(BonusTypeEnum::cases(), 'value'));
+    }
 }

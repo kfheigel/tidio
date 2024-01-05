@@ -19,7 +19,7 @@ class Department
     private Uuid $id;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    private string $name;
+    private string $departmentName;
 
     #[ORM\Column(type: Types::STRING, enumType: BonusTypeEnum::class)]
     private BonusTypeEnum $bonusType;
@@ -28,12 +28,12 @@ class Department
     private int $bonusFactor;
 
     public function __construct(
-        string $name,
+        string $departmentName,
         BonusTypeEnum $bonusType,
         int $bonusFactor,
         ?Uuid $id = null
     ) {
-        $this->name = $name;
+        $this->departmentName = $departmentName;
         $this->bonusType = $bonusType;
         $this->bonusFactor = $bonusFactor;
         $this->id = $id ?? Uuid::v4();
@@ -43,14 +43,14 @@ class Department
         return $this->id;
     }
 
-    public function getName(): string
+    public function getDepartmentName(): string
     {
-        return $this->name;
+        return $this->departmentName;
     }
 
-    public function setName(string $name): void
+    public function setDepartmentName(string $departmentName): void
     {
-        $this->name = $name;
+        $this->departmentName = $departmentName;
     }
 
     public function getBonusType(): BonusTypeEnum
@@ -71,5 +71,10 @@ class Department
     public function setBonusFactor(int $bonusFactor): void
     {
         $this->bonusFactor = $bonusFactor;
+    }
+
+    public function toArray(): array
+    {
+        return get_object_vars($this);
     }
 }

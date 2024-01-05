@@ -31,4 +31,5 @@ framework:
                     - App\Infrastructure\MessageBus\Middleware\LoggerMiddleware
 
         routing:
-            'App\UseCase\CreateEmployee\CreateEmployeeCommand': async
+            'App\Domain\Command\AsyncCommandInterface': async
+            'App\Domain\Command\SyncCommandInterface': sync

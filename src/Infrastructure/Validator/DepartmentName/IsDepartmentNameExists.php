@@ -8,7 +8,6 @@ use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 #[Attribute]
-
 final class IsDepartmentNameExists extends Constraint
 {
     public string $violationCode;
@@ -20,5 +19,5 @@ final class IsDepartmentNameExists extends Constraint
         $this->violationCode = (string) $code;
     }
 
-    public string $message = 'Department with name: "{{ string }}" already exist';
+    public string $message = 'Department with departmentName: "{{ string }}" already exist';
 }

@@ -42,7 +42,7 @@ final class DepartmentRepository extends ServiceEntityRepository implements Depa
     public function findOneByName(string $name): ?Department
     {
         /** @var Department|null $department */
-        $department = $this->findOneBy(["name" => $name]);
+        $department = $this->findOneBy(["departmentName" => $name]);
 
         return $department;
     }

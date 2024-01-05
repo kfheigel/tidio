@@ -13,7 +13,6 @@ final class SalaryBuilder
     private Uuid $id;
     private int $baseSalary;
     private ?int $bonusSalary;
-    private ?int $salaryWithBonus;
 
     public function withId(Uuid $id): self
     {
@@ -35,13 +34,6 @@ final class SalaryBuilder
         return $this;
     }
 
-    public function withSalaryWithBonus(?int $salaryWithBonus): self
-    {
-        $this->salaryWithBonus = $salaryWithBonus;
-
-        return $this;
-    }
-
     public static function any(): self
     {
         return new SalaryBuilder();
@@ -50,14 +42,10 @@ final class SalaryBuilder
     public function build(): Salary
     {
         $faker = Factory::create();
-        $fakeBaseSalary = $faker->numberBetween(1000, 2000);
-        $fakeBonusSalary = $faker->numberBetween(0, 100);
-        $fakeSalaryWithBonus = $fakeBaseSalary + $fakeBonusSalary;
 
         return new Salary(
-            $this->baseSalary ?? $fakeBaseSalary,
-                $this->bonusSalary ?? $fakeBonusSalary,
-                $this->salaryWithBonus ?? $fakeSalaryWithBonus,
+            $this->baseSalary ?? $faker->numberBetween(1000, 2000),
+                $this->bonusSalary ?? $faker->numberBetween(0, 100),
                 $this->id ?? Uuid::v4()
         );
     }

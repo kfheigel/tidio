@@ -34,7 +34,7 @@ final class SeedDepartmentCommand extends Command
         $availableDepartments = $this->provideAvailableDepartments();
         foreach ($availableDepartments as $departmentData) {
             $department = new Department(
-                $departmentData['name'],
+                $departmentData['departmentName'],
                 BonusTypeEnum::from($departmentData['bonusType']),
                 $departmentData['bonusFactor'],
                 Uuid::fromString($departmentData['id'])
@@ -43,7 +43,7 @@ final class SeedDepartmentCommand extends Command
             $this->departmentRepository->save($department);
             $this->em->flush();
 
-            $output->writeln(sprintf("%s Department introduced", $department->getName()));
+            $output->writeln(sprintf("%s Department introduced", $department->getDepartmentName()));
         }
 
         return Command::SUCCESS;

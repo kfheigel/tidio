@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\EmployeeSalary;
+namespace App\ReadModel\EmployeesPayroll;
 
 use App\Domain\Messenger\MessageBus\QueryInterface;
 
-final class EmployeeSalaryQuery implements QueryInterface
+final class EmployeesPayrollQuery implements QueryInterface
 {
     public function __construct()
     {

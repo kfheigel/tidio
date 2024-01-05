@@ -35,7 +35,6 @@ final class SeedSalaryCommand extends Command
             $salary = new Salary(
                 $salaryData['baseSalary'],
                 $salaryData['bonusSalary'],
-                $salaryData['salaryWithBonus'],
                 Uuid::fromString($salaryData['id'])
             );
 

@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final class CreateEmployeeHandler implements CommandHandlerInterface
+final readonly class CreateEmployeeHandler implements CommandHandlerInterface
 {
     public function __construct(
         private EmployeeRepositoryInterface $employeeRepository,

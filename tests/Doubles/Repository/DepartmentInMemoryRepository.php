@@ -40,7 +40,7 @@ final class DepartmentInMemoryRepository implements DepartmentRepositoryInterfac
         foreach ($this->entities as $id => $department) {
             $found = true;
 
-            if ($department->getName() !== $name) {
+            if ($department->getDepartmentName() !== $name) {
                 $found = false;
             }
 
