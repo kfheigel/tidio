@@ -8,6 +8,7 @@ use App\Domain\Repository\DepartmentRepositoryInterface;
 use App\Infrastructure\Validator\DepartmentName\IsDepartmentNameExists;
 use App\Infrastructure\Validator\DepartmentName\IsDepartmentNameExistsValidator;
 use App\Tests\Common\ValidatorTestCase;
+use Symfony\Component\Uid\Uuid;
 
 final class IsDepartmentNameExistsValidatorTest extends ValidatorTestCase
 {
@@ -35,7 +36,7 @@ final class IsDepartmentNameExistsValidatorTest extends ValidatorTestCase
     {
         // given
         $givenExistingDepartmentName = "Existing department departmentName";
-        $this->giveDepartment($givenExistingDepartmentName);
+        $this->giveDepartment(Uuid::v4(), $givenExistingDepartmentName);
 
         // when
         $this->validator->validate($givenExistingDepartmentName, $this->givenConstraint);
@@ -52,7 +53,7 @@ final class IsDepartmentNameExistsValidatorTest extends ValidatorTestCase
     {
         // given
         $givenExistingDepartmentName = 'Existing department departmentName';
-        $this->giveDepartment($givenExistingDepartmentName);
+        $this->giveDepartment(Uuid::v4(), $givenExistingDepartmentName);
         $givenViolationCode = 12345;
 
         // when
