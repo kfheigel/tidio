@@ -52,7 +52,7 @@ final class IsSalaryUuidExistsValidatorTest extends ValidatorTestCase
     {
         // given
         $givenSalaryId = Uuid::v4();
-        $this->giveSalary($givenSalaryId, 'Given Name');
+        $this->giveSalary($givenSalaryId);
 
         // when
         $this->validator->validate($givenSalaryId, $this->givenConstraint);

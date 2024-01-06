@@ -15,26 +15,21 @@ use App\Tests\Fixtures\DepartmentBuilder;
 use App\Tests\Fixtures\EmployeeBuilder;
 use App\Tests\Fixtures\SalaryBuilder;
 use DateTimeInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
-use Faker\Generator;
 use PHPUnit\Framework\Assert;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Uuid;
 
-abstract class UnitTestCase extends KernelTestCase
+class IntegrationTestCase extends KernelTestCase
 {
     use PrepareRepositoryInMemoryTrait;
 
     protected ContainerInterface $container;
-    protected Generator $faker;
     protected EmployeeRepositoryInterface $employeeRepository;
     protected DepartmentRepositoryInterface $departmentRepository;
     protected SalaryRepositoryInterface $salaryRepository;
-    protected ObjectManager $em;
+
     protected MessageBusInterface $commandBus;
 
     protected function setUp(): void
@@ -43,10 +38,6 @@ abstract class UnitTestCase extends KernelTestCase
         $this->container = static::getContainer();
 
         $this->substituteRepositoryInMemoryImplementation();
-
-        $em = $this->container->get(EntityManagerInterface::class);
-        Assert::assertInstanceOf(ObjectManager::class, $em);
-        $this->em = $em;
 
         $employeeRepository = $this->container->get(EmployeeRepositoryInterface::class);
         Assert::assertInstanceOf(EmployeeRepositoryInterface::class, $employeeRepository);
@@ -63,32 +54,42 @@ abstract class UnitTestCase extends KernelTestCase
         $commandBus = $this->container->get(MessageBusInterface::class);
         Assert::assertInstanceOf(MessageBusInterface::class, $commandBus);
         $this->commandBus = $commandBus;
-
-        $this->faker = Factory::create();
     }
 
     protected function giveSalary(int $baseSalary): Salary
     {
-        return SalaryBuilder::any()
+        $salary = SalaryBuilder::any()
             ->withBaseSalary($baseSalary)
             ->withBonusSalary(null)
             ->build();
+
+        $this->salaryRepository->save($salary);
+
+        return $salary;
     }
 
     protected function giveDepartment(BonusTypeEnum $givenBonusType, int $givenBonusFactor): Department
     {
-        return DepartmentBuilder::any()
+        $department =  DepartmentBuilder::any()
             ->withBonusType($givenBonusType)
             ->withBonusFactor($givenBonusFactor)
             ->build();
+
+        $this->departmentRepository->save($department);
+
+        return $department;
     }
 
     protected function giveEmployee(Uuid $givenDepartmentId, Uuid $givenSalaryId, DateTimeInterface $givenEmploymentDate): Employee
     {
-        return EmployeeBuilder::any()
+        $employee = EmployeeBuilder::any()
             ->withDepartmentId($givenDepartmentId)
             ->withSalaryId($givenSalaryId)
             ->withEmploymentDate($givenEmploymentDate)
             ->build();
+
+        $this->employeeRepository->save($employee);
+
+        return $employee;
     }
 }

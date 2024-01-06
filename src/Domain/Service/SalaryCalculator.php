@@ -35,9 +35,9 @@ final class SalaryCalculator implements CalculatorInterface
     {
         $strategyClass = sprintf('App\Domain\Service\BonusTypeStrategy\%sBonusTypeStrategy', ucfirst($strategy));
 
-        /** @var BonusTypeStrategyInterface $strategy */
-        $strategy = new $strategyClass();
+        /** @var BonusTypeStrategyInterface $strategyInstance */
+        $strategyInstance = new $strategyClass();
 
-        $this->strategy = $strategy;
+        $this->strategy = $strategyInstance;
     }
 }
