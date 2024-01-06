@@ -7,11 +7,11 @@ namespace App\Tests\TestTemplate;
 use App\Domain\Entity\Salary;
 use App\Domain\Repository\NonExistentEntityException;
 use App\Domain\Repository\SalaryRepositoryInterface;
+use App\Tests\Common\UnitTestCase;
 use App\Tests\Fixtures\SalaryBuilder;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 
-abstract class SalaryRepositoryTestTemplate extends KernelTestCase
+abstract class SalaryRepositoryTestTemplate extends UnitTestCase
 {
     abstract protected function repository(): SalaryRepositoryInterface;
     abstract protected function save(Salary $salary): void;

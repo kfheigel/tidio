@@ -10,23 +10,21 @@ use App\Tests\TestTemplate\EmployeeRepositoryTestTemplate;
 use App\Tests\Doubles\Repository\EmployeeInMemoryRepository;
 
 final class EmployeeInMemoryRepositoryTest extends EmployeeRepositoryTestTemplate
-{    
-    private EmployeeRepositoryInterface $repository;
-
+{
     protected function setUp():void
     {
         parent::setUp();
 
-        $this->repository = new EmployeeInMemoryRepository();
+        $this->employeeRepository = new EmployeeInMemoryRepository();
     }
 
     protected function repository(): EmployeeRepositoryInterface
     {
-        return $this->repository;
+        return $this->employeeRepository;
     }
 
     protected function save(Employee $employee): void
     {
-        $this->repository->save($employee);
+        $this->employeeRepository->save($employee);
     }
 }

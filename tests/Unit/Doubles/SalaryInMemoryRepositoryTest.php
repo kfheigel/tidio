@@ -11,22 +11,20 @@ use App\Tests\TestTemplate\SalaryRepositoryTestTemplate;
 
 final class SalaryInMemoryRepositoryTest extends SalaryRepositoryTestTemplate
 {
-    private SalaryRepositoryInterface $repository;
-
     protected function setUp():void
     {
         parent::setUp();
 
-        $this->repository = new SalaryInMemoryRepository();
+        $this->salaryRepository = new SalaryInMemoryRepository();
     }
 
     protected function repository(): SalaryRepositoryInterface
     {
-        return $this->repository;
+        return $this->salaryRepository;
     }
 
     protected function save(Salary $salary): void
     {
-        $this->repository->save($salary);
+        $this->salaryRepository->save($salary);
     }
 }

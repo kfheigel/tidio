@@ -17,31 +17,20 @@ final class EmployeeRepositoryTest extends EmployeeRepositoryTestTemplate
 {
     use ReloadDatabaseTrait;
     
-    private ObjectManager $em;
-    private EmployeeRepositoryInterface $repository;
-
     protected function setUp():void
     {
+        parent::setUp();
         self::bootKernel();
-        $container = static::getContainer();
-
-        $em = $container->get(EntityManagerInterface::class);
-        Assert::assertInstanceOf(ObjectManager::class, $em);
-        $this->em = $em;
-
-        $repository = $container->get(EmployeeRepository::class);
-        Assert::assertInstanceOf(EmployeeRepositoryInterface::class, $repository);
-        $this->repository = $repository;
     }
 
     protected function repository(): EmployeeRepositoryInterface
     {
-        return $this->repository;
+        return $this->employeeRepository;
     }
 
     protected function save(Employee $employee): void
     {
-        $this->repository->save($employee);
+        $this->employeeRepository->save($employee);
         $this->em->flush();
         $this->em->clear();
     }

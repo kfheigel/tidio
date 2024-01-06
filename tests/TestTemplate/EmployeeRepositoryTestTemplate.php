@@ -6,12 +6,12 @@ namespace App\Tests\TestTemplate;
 
 use App\Domain\Entity\Employee;
 use App\Domain\Repository\NonExistentEntityException;
+use App\Tests\Common\UnitTestCase;
 use Symfony\Component\Uid\Uuid;
 use App\Tests\Fixtures\EmployeeBuilder;
 use App\Domain\Repository\EmployeeRepositoryInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-abstract class EmployeeRepositoryTestTemplate extends KernelTestCase
+abstract class EmployeeRepositoryTestTemplate extends UnitTestCase
 {
     abstract protected function repository(): EmployeeRepositoryInterface;
     abstract protected function save(Employee $employee): void;

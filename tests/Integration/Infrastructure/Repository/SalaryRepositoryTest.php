@@ -17,31 +17,20 @@ final class SalaryRepositoryTest extends SalaryRepositoryTestTemplate
 {
     use ReloadDatabaseTrait;
 
-    private ObjectManager $em;
-    private SalaryRepositoryInterface $repository;
-
     protected function setUp():void
     {
+        parent::setUp();
         self::bootKernel();
-        $container = static::getContainer();
-
-        $em = $container->get(EntityManagerInterface::class);
-        Assert::assertInstanceOf(ObjectManager::class, $em);
-        $this->em = $em;
-
-        $repository = $container->get(SalaryRepository::class);
-        Assert::assertInstanceOf(SalaryRepositoryInterface::class, $repository);
-        $this->repository = $repository;
     }
 
     protected function repository(): SalaryRepositoryInterface
     {
-        return $this->repository;
+        return $this->salaryRepository;
     }
 
     protected function save(Salary $salary): void
     {
-        $this->repository->save($salary);
+        $this->salaryRepository->save($salary);
         $this->em->flush();
         $this->em->clear();
     }

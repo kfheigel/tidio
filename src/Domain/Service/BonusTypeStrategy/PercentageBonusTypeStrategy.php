@@ -7,7 +7,6 @@ namespace App\Domain\Service\BonusTypeStrategy;
 use App\Domain\Entity\Department;
 use App\Domain\Entity\Employee;
 use App\Domain\Entity\Salary;
-use App\UseCase\UpdateEmployeeSalary\UpdateEmployeeSalaryCommand;
 
 final readonly class PercentageBonusTypeStrategy implements BonusTypeStrategyInterface
 {

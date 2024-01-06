@@ -11,22 +11,20 @@ use App\Tests\TestTemplate\DepartmentRepositoryTestTemplate;
 
 final class DepartmentInMemoryRepositoryTest extends DepartmentRepositoryTestTemplate
 {
-    private DepartmentRepositoryInterface $repository;
-
     protected function setUp():void
     {
         parent::setUp();
 
-        $this->repository = new DepartmentInMemoryRepository();
+        $this->departmentRepository = new DepartmentInMemoryRepository();
     }
 
     protected function repository(): DepartmentRepositoryInterface
     {
-        return $this->repository;
+        return $this->departmentRepository;
     }
 
     protected function save(Department $department): void
     {
-        $this->repository->save($department);
+        $this->departmentRepository->save($department);
     }
 }

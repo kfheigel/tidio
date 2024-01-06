@@ -7,11 +7,11 @@ namespace App\Tests\TestTemplate;
 use App\Domain\Entity\Department;
 use App\Domain\Repository\DepartmentRepositoryInterface;
 use App\Domain\Repository\NonExistentEntityException;
+use App\Tests\Common\UnitTestCase;
 use App\Tests\Fixtures\DepartmentBuilder;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 
-abstract class DepartmentRepositoryTestTemplate extends KernelTestCase
+abstract class DepartmentRepositoryTestTemplate extends UnitTestCase
 {
     abstract protected function repository(): DepartmentRepositoryInterface;
     abstract protected function save(Department $department): void;
