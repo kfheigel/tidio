@@ -16,6 +16,11 @@ this command will start project in docker containers. The project will be availa
 ```  
 this command will stop project and remove all docker containers
 
+```bash  
+ make consume-async  
+```  
+this command will start consuming messages within rabbitmq
+
 ## Test
 To test project, simply run:
 ```bash  
