@@ -4,32 +4,34 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\BonusTypeStrategy;
 
-use App\Domain\Entity\Department;
-use App\Domain\Entity\Employee;
-use App\Domain\Entity\Salary;
+use App\Domain\Config\FixedBonusTypeConfig;
+use App\Domain\DTO\EmployeePayroll;
 
-final class FixedBonusTypeStrategy implements BonusTypeStrategyInterface
+final readonly class FixedBonusTypeStrategy implements BonusTypeStrategyInterface
 {
-    private int $yearsOfWorkAccountableToBonus = 10;
-
-    public function calculateBonusAmount(Employee $employee, Department $department, Salary $salary): Salary
-    {
-        $yearsOfEmployment = $this->getYearsOfEmployment($employee);
-        $bonusAmount = $department->getBonusFactor() * $yearsOfEmployment;
-        $salary->setBonusSalary((int)$bonusAmount);
-
-        return $salary;
+    public function __construct(
+        private FixedBonusTypeConfig $config
+    ) {
     }
 
-    private function getYearsOfEmployment(Employee $employee): int
+    public function calculateBonusAmount(EmployeePayroll $employeePayroll): EmployeePayroll
+    {
+        $yearsOfEmployment = $this->getYearsOfEmployment($employeePayroll);
+        $bonusAmount = $employeePayroll->bonusFactor * $yearsOfEmployment;
+        $employeePayroll->bonusSalary = (int)$bonusAmount;
+
+        return $employeePayroll;
+    }
+
+    private function getYearsOfEmployment(EmployeePayroll $employeePayroll): int
     {
         $now = date_create('now');
-        $employmentDate = $employee->getEmploymentDate();
+        $employmentDate = $employeePayroll->employmentDate;
 
         $years = (int)date_diff($employmentDate, $now)->format('%y');
 
-        if ($years > $this->yearsOfWorkAccountableToBonus) {
-            return $this->yearsOfWorkAccountableToBonus;
+        if ($years > $this->config->yearsOfWorkAccountableToBonus) {
+            return $this->config->yearsOfWorkAccountableToBonus;
         }
         return $years;
     }

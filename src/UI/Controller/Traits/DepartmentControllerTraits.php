@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Messenger\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait DepartmentControllerTraits
@@ -22,12 +23,18 @@ trait DepartmentControllerTraits
         $bonusType = $parameters['bonusType'];
         $bonusFactor = (int)$parameters['bonusFactor'];
 
-        $command = new CreateDepartmentCommand(
-            $departmentName,
-            $bonusType,
-            $bonusFactor
-        );
-        $this->commandBus->dispatch($command);
+        try {
+            $command = new CreateDepartmentCommand(
+                $departmentName,
+                $bonusType,
+                $bonusFactor
+            );
+            $this->commandBus->dispatch($command);
+
+            $this->addFlash('success', 'New Department Created!');
+        } catch (ValidationFailedException) {
+            $this->addFlash('error', 'Department with that name already exists');
+        }
     }
 
     private function buildForm(): FormInterface

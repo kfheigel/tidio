@@ -32,7 +32,6 @@ final class DepartmentController extends AbstractController
                 /** @var array $parameters */
                 $parameters = $request->request->all()['form'];
                 $this->createDepartment($parameters);
-                $this->addFlash('success', 'New Department Created!');
 
                 return $this->redirectToRoute('app_add_department');
             }

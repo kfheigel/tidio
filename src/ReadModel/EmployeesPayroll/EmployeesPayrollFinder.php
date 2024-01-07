@@ -8,13 +8,13 @@ use App\Domain\Messenger\QueryFinderInterface;
 use App\Domain\Repository\DepartmentRepositoryInterface;
 use App\Domain\Repository\EmployeeRepositoryInterface;
 use App\Domain\Repository\SalaryRepositoryInterface;
-use App\Infrastructure\Service\EmployeeDataMerger;
+use App\Infrastructure\Service\EmployeePayrollDataCollector;
 
 final readonly class EmployeesPayrollFinder implements QueryFinderInterface
 {
     public function __construct(
         private EmployeeRepositoryInterface $repository,
-        private EmployeeDataMerger $dataMerger
+        private EmployeePayrollDataCollector $dataCollector
     ) {
     }
 
@@ -24,7 +24,7 @@ final readonly class EmployeesPayrollFinder implements QueryFinderInterface
         $employees =  $this->repository->findAll();
 
         foreach ($employees as $employee) {
-            $employeesPayroll[] = $this->dataMerger->merge($employee);
+            $employeesPayroll[] = $this->dataCollector->collect($employee);
         }
 
         return $employeesPayroll;

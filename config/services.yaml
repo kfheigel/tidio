@@ -23,6 +23,14 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
 
+    # Controller
     App\UI\Controller\HealthcheckController:
         arguments:
             $rabbitDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+    App\Domain\Service\BonusTypeStrategy\PercentageBonusTypeStrategy:
+        public: true
+    App\Domain\Service\BonusTypeStrategy\FixedBonusTypeStrategy:
+        public: true
+        arguments:
+            $config: '@App\Domain\Config\FixedBonusTypeConfig'

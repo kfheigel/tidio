@@ -4,11 +4,7 @@
 
 {% block body %}
     <div class="example-wrapper">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
+        {% include 'messages/flashMessages.html.twig' %}
         <h1>Add new employee</h1>
 
         {{ form_start(form) }}

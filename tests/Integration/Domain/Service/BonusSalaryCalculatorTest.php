@@ -6,20 +6,22 @@ namespace App\Tests\Integration\Domain\Service;
 
 use App\Domain\Entity\Enum\BonusTypeEnum;
 use App\Domain\Service\CalculatorInterface;
-use App\Domain\Service\SalaryCalculator;
 use App\Tests\Common\IntegrationTestCase;
 use DateTimeImmutable;
 use PHPUnit\Framework\Assert;
 
-final class SalaryCalculatorTest extends IntegrationTestCase
+final class BonusSalaryCalculatorTest extends IntegrationTestCase
 {
     private CalculatorInterface $calculator;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->calculator = new SalaryCalculator($this->commandBus);
+        $calculator = $this->container->get(CalculatorInterface::class);
+        Assert::assertInstanceOf(CalculatorInterface::class, $calculator);
+        $this->calculator = $calculator;
     }
+
     /** @test */
     public function calculate_bonus_amount(): void
     {
@@ -36,12 +38,13 @@ final class SalaryCalculatorTest extends IntegrationTestCase
 
         $givenEmploymentDate = new DateTimeImmutable('2022-01-01');
         $givenEmployee = $this->giveEmployee($givenDepartment->getId(), $givenSalary->getId(), $givenEmploymentDate);
+        $givenEmployeePayroll = $this->giveEmployeePayroll($givenEmployee);
 
         //when
-        $salary = $this->calculator->calculate($givenEmployee, $givenDepartment, $givenSalary);
+        $employeePayroll = $this->calculator->calculate($givenEmployeePayroll);
         $expectedBonusSalary = 200;
 
         //then
-        Assert::assertEquals($expectedBonusSalary, $salary->getBonusSalary());
+        Assert::assertEquals($expectedBonusSalary, $employeePayroll->bonusSalary);
     }
 }

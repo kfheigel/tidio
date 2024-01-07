@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Messenger\Exception\ValidationFailedException;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -29,14 +30,20 @@ trait EmployeeControllerTraits
         /** @var DateTimeInterface $employmentDay */
         $employmentDay = (new DateTimeImmutable())->createFromFormat('Y-m-d', $employmentDate);
 
-        $employeeCommand = new CreateEmployeeCommand(
-            $name,
-            $surname,
-            $departmentId,
-            $salaryId,
-            $employmentDay
-        );
-        $this->commandBus->dispatch($employeeCommand);
+        try {
+            $employeeCommand = new CreateEmployeeCommand(
+                $name,
+                $surname,
+                $departmentId,
+                $salaryId,
+                $employmentDay
+            );
+            $this->commandBus->dispatch($employeeCommand);
+
+            $this->addFlash('success', 'New Employee Created!');
+        } catch (ValidationFailedException) {
+            $this->addFlash('error', 'Creating new employee failed');
+        }
     }
 
     private function createSalary(array $parameters): Uuid

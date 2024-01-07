@@ -18,7 +18,9 @@ final class FixedBonusTypeStrategyTest extends UnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->bonusTypeStrategy = new FixedBonusTypeStrategy();
+        $bonusTypeStrategy = $this->container->get(FixedBonusTypeStrategy::class);
+        $this->assertInstanceOf(FixedBonusTypeStrategy::class, $bonusTypeStrategy);
+        $this->bonusTypeStrategy = $bonusTypeStrategy;
     }
 
     /**
@@ -35,12 +37,13 @@ final class FixedBonusTypeStrategyTest extends UnitTestCase
         $givenDepartment = $this->giveDepartment($givenBonusType, $givenBonusFactor);
 
         $givenEmployee = $this->giveEmployee($givenDepartment->getId(), $givenSalary->getId(), $givenEmploymentDate);
+        $givenEmployeePayroll = $this->giveEmployeePayroll($givenEmployee, $givenDepartment, $givenSalary);
 
         //when
-        $salary = $this->bonusTypeStrategy->calculateBonusAmount($givenEmployee, $givenDepartment, $givenSalary);
+        $employeePayroll = $this->bonusTypeStrategy->calculateBonusAmount($givenEmployeePayroll);
 
         //then
-        Assert::assertEquals($expectedBonusSalary, $salary->getBonusSalary());
+        Assert::assertEquals($expectedBonusSalary, $employeePayroll->bonusSalary);
     }
 
     public function provideValues(): array

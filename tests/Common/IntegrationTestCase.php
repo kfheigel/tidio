@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Common;
 
+use App\Domain\DTO\EmployeePayroll;
 use App\Domain\Entity\Department;
 use App\Domain\Entity\Employee;
 use App\Domain\Entity\Enum\BonusTypeEnum;
@@ -11,6 +12,7 @@ use App\Domain\Entity\Salary;
 use App\Domain\Repository\DepartmentRepositoryInterface;
 use App\Domain\Repository\EmployeeRepositoryInterface;
 use App\Domain\Repository\SalaryRepositoryInterface;
+use App\Infrastructure\Factory\EmployeePayrollFactory;
 use App\Tests\Fixtures\DepartmentBuilder;
 use App\Tests\Fixtures\EmployeeBuilder;
 use App\Tests\Fixtures\SalaryBuilder;
@@ -30,6 +32,7 @@ class IntegrationTestCase extends KernelTestCase
     protected DepartmentRepositoryInterface $departmentRepository;
     protected SalaryRepositoryInterface $salaryRepository;
 
+    protected EmployeePayrollFactory $employeePayrollFactory;
     protected MessageBusInterface $commandBus;
 
     protected function setUp(): void
@@ -54,6 +57,10 @@ class IntegrationTestCase extends KernelTestCase
         $commandBus = $this->container->get(MessageBusInterface::class);
         Assert::assertInstanceOf(MessageBusInterface::class, $commandBus);
         $this->commandBus = $commandBus;
+
+        $employeePayrollFactory = $this->container->get(EmployeePayrollFactory::class);
+        Assert::assertInstanceOf(EmployeePayrollFactory::class, $employeePayrollFactory);
+        $this->employeePayrollFactory = $employeePayrollFactory;
     }
 
     protected function giveSalary(int $baseSalary): Salary
@@ -91,5 +98,10 @@ class IntegrationTestCase extends KernelTestCase
         $this->employeeRepository->save($employee);
 
         return $employee;
+    }
+
+    protected function giveEmployeePayroll(Employee $employee): EmployeePayroll
+    {
+        return $this->employeePayrollFactory->createEmployeePayroll($employee);
     }
 }

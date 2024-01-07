@@ -34,7 +34,6 @@ final class EmployeeController extends AbstractController
                 $salaryId = $this->createSalary($parameters);
                 $this->createEmployee($parameters, $salaryId);
 
-                $this->addFlash('success', 'New Employee Created!');
 
                 return $this->redirectToRoute('app_add_employee');
             }

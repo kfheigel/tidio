@@ -34,13 +34,13 @@ final class PercentageBonusTypeStrategyTest extends UnitTestCase
 
         $givenEmploymentDate = new DateTimeImmutable('2020-01-01');
         $givenEmployee = $this->giveEmployee($givenDepartment->getId(), $givenSalary->getId(), $givenEmploymentDate);
-
+        $givenEmployeePayroll = $this->giveEmployeePayroll($givenEmployee, $givenDepartment, $givenSalary);
 
         //when
-        $salary = $this->bonusTypeStrategy->calculateBonusAmount($givenEmployee, $givenDepartment, $givenSalary);
+        $employeePayroll = $this->bonusTypeStrategy->calculateBonusAmount($givenEmployeePayroll);
 
         //then
-        Assert::assertEquals($expectedBonusSalary, $salary->getBonusSalary());
+        Assert::assertEquals($expectedBonusSalary, $employeePayroll->bonusSalary);
     }
 
     public function provideValues(): array

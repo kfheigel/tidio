@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Common;
 
+use App\Domain\DTO\EmployeePayroll;
 use App\Domain\Entity\Department;
 use App\Domain\Entity\Employee;
 use App\Domain\Entity\Enum\BonusTypeEnum;
@@ -11,6 +12,7 @@ use App\Domain\Entity\Salary;
 use App\Domain\Repository\DepartmentRepositoryInterface;
 use App\Domain\Repository\EmployeeRepositoryInterface;
 use App\Domain\Repository\SalaryRepositoryInterface;
+use App\Infrastructure\Factory\EmployeePayrollFactory;
 use App\Tests\Fixtures\DepartmentBuilder;
 use App\Tests\Fixtures\EmployeeBuilder;
 use App\Tests\Fixtures\SalaryBuilder;
@@ -90,5 +92,19 @@ abstract class UnitTestCase extends KernelTestCase
             ->withSalaryId($givenSalaryId)
             ->withEmploymentDate($givenEmploymentDate)
             ->build();
+    }
+
+    protected function giveEmployeePayroll(Employee $employee, Department $department, Salary $salary): EmployeePayroll
+    {
+        return new EmployeePayroll(
+            $employee->getName(),
+            $employee->getSurname(),
+            $employee->getEmploymentDate(),
+            $department->getDepartmentName(),
+            $department->getBonusFactor(),
+            $salary->getBaseSalary(),
+            $salary->getBonusSalary(),
+            $department->getBonusType(),
+        );
     }
 }
