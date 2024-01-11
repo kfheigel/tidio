@@ -1,4 +1,4 @@
-run: build up cache-clear composer-install seed
+run: build up composer-install cache-clear seed
 test: phpcs lint phpspec unit-tests integration-tests phpstan-run
 
 build:
